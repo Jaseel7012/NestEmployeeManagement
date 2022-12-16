@@ -12,4 +12,10 @@ public interface SecurityDao extends CrudRepository<Security,Integer> {
     @Query(value = "SELECT `id`, `name`, `password`, `sec_id`, `uname` FROM `security` WHERE `uname`=:uname AND `password`=:password",nativeQuery = true)
     List<Security> SecurityLogin(@Param("uname") String uname,@Param("password") String password);
 
+    @Query(value = "SELECT `id`, `name`, `password`, `sec_id`, `uname` FROM `security` WHERE `name` LIKE %:name%",nativeQuery = true)
+    List<Security> SearchSecurityQuard(@Param("name")String name);
+
+    @Query(value = "SELECT * FROM `security` WHERE `id`=:id",nativeQuery = true)
+    List<Security> securitygetid(@Param("id") Integer id);
+
 }
