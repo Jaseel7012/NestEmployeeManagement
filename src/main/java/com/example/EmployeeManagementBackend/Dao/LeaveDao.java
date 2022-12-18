@@ -2,6 +2,8 @@ package com.example.EmployeeManagementBackend.Dao;
 
 import com.example.EmployeeManagementBackend.Model.LeaveCount;
 import com.example.EmployeeManagementBackend.Model.LeavesApply;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +21,17 @@ public interface LeaveDao extends CrudRepository<LeavesApply,Integer> {
         "WHERE l.leavestatus=0",nativeQuery = true)
     List<Map<String,String>> remainingleaves();
 
+//@Query(value = "SELECT * FROM `leavesmodel` WHERE `emp_id`=:emp_id AND :date BETWEEN `frmdate` AND `todate` AND `leavestatus`=1",nativeQuery = true)
+//List<LeavesApply> emplcheckleave(@Param("emp_id") Integer emp_id,String date);
 
+@Modifying
+@Transactional
+@Query(value = "UPDATE `leavesmodel` SET `leavestatus`=-1 WHERE `id`=:id",nativeQuery = true)
+    void reject(@Param("id") Integer id);
+@Modifying
+@Transactional
+@Query(value = "UPDATE `leavesmodel` SET `leavestatus`=1 WHERE `id`=:id",nativeQuery = true)
+    void accept(@Param("id") Integer id);
 
 }
 
