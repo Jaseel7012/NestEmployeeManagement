@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -69,15 +70,63 @@ public class LeavesController {
         return  (List<Map<String,String>>) leaveDao.remainingleaves();
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/reject",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> rejectleave(@RequestBody LeavesApply la){
+        HashMap<String,String> hm=new HashMap<>();
+        leaveDao.reject(la.getId());
+        hm.put("status","success");
+        return hm;
+
+    }
+
+    @PostMapping(path = "/accept",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> accept(@RequestBody LeavesApply la){
+        HashMap<String,String> hm=new HashMap<>();
+        List<LeaveCount> li=leaveCountDao.leavecountEmp(la.getEmp_id());
+        LocalDate frmdte=LocalDate.parse(la.getFrmdate());
+        LocalDate todate=LocalDate.parse(la.getTodate());
+        int days=(int) ChronoUnit.DAYS.between(frmdte,todate)+1;
+        System.out.println(days);
+        System.out.println(la.getId());
+        leaveDao.accept(la.getId());
+        int difference=leavecheck(li,la.getType())-days;
+        System.out.println(difference);
+        if(difference<0){
+            hm.put("status","not possible ");
+        }
+       // int diff1=leavecheck(li,la.getType())-days;
+
+        if (la.getType().equals("sick")){
+
+            leaveCountDao.sick(difference,la.getEmp_id());
+
+        } else if (la.getType().equals("cas")){
+           leaveCountDao.cas(difference, la.getEmp_id());
+            System.out.println("");
+
+        }
+        else {
+            leaveCountDao.special(difference,la.getEmp_id());
+            if(difference<0){
+                hm.put("status","not possible ");
+            }
+        }
+        hm.put("status","success");
+        return hm;
+
+    }
+
     public int leavecheck(List<LeaveCount> leaveCounts,String leavetype){
         if(leavetype.equals("sick")){
             return leaveCounts.get(0).getSick();
-        } else if (leavetype.equals("special")) {
+        } else if (leavetype.equals("cas")) {
             return  leaveCounts.get(0).getSpecial();
         }
         else {
             return leaveCounts.get(0).getCas();
         }
+
     }
 
 
