@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "leaves")
+@Table(name = "leavesmodel")
 public class LeavesApply {
     @Id
     @GeneratedValue
@@ -18,11 +18,12 @@ public class LeavesApply {
     private String todate;
     private String applydate;
     private String remarks;
+    private int leavestatus;
 
     public LeavesApply() {
     }
 
-    public LeavesApply(int id, int emp_id, String type, String frmdate, String todate, String applydate, String remarks) {
+    public LeavesApply(int id, int emp_id, String type, String frmdate, String todate, String applydate, String remarks,int leavestatus) {
         this.id = id;
         this.emp_id = emp_id;
         this.type = type;
@@ -30,6 +31,7 @@ public class LeavesApply {
         this.todate = todate;
         this.applydate = applydate;
         this.remarks = remarks;
+        this.leavestatus=leavestatus;
     }
 
     public int getId() {
@@ -86,5 +88,12 @@ public class LeavesApply {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public int getLeavestatus() {
+        return leavestatus;
+    }
+    public void setLeavestatus(int leavestatus){
+        this.leavestatus=leavestatus;
     }
 }

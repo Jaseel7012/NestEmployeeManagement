@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LeaveCountDao extends CrudRepository<LeaveCount,Integer> {
-
+@Query(value = "SELECT * FROM `leavecountnew` WHERE `emp_id`= :emp_id",nativeQuery = true)
+    List<LeaveCount> leavecountEmp(@Param("emp_id") int emp_id);
 }
 

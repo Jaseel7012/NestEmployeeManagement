@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "leavecount")
+@Table(name = "leavecountnew")
 public class LeaveCount {
     @Id
     @GeneratedValue
@@ -16,7 +16,7 @@ public class LeaveCount {
     private String year;
     private int sick;
     private int cas;
-    private int special=3;
+    private int special;
 
     public LeaveCount() {
     }

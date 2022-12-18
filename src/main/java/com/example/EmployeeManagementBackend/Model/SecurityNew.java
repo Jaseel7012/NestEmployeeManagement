@@ -6,28 +6,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "employee")
-public class EmployeeModel {
+@Table(name = "securitynew")
+public class SecurityNew {
     @Id
     @GeneratedValue
     private int id;
-    private int emp_id;
-    private  String name;
-    private String designation;
-    private  String email;
-    private String username;
+    private int sec_code;
+    private String name;
+    private String email;
+    private String uname;
     private String password;
 
-    public EmployeeModel() {
+    public SecurityNew() {
     }
 
-    public EmployeeModel(int id,int emp_id, String name, String designation, String email, String username, String password) {
+    public SecurityNew(int id, int sec_code, String name, String email, String uname, String password) {
         this.id = id;
-        this.emp_id=emp_id;
+        this.sec_code = sec_code;
         this.name = name;
-        this.designation = designation;
         this.email = email;
-        this.username = username;
+        this.uname = uname;
         this.password = password;
     }
 
@@ -38,11 +36,13 @@ public class EmployeeModel {
     public void setId(int id) {
         this.id = id;
     }
-    public void setEmp_id(int emp_id){
 
+    public int getSec_code() {
+        return sec_code;
     }
-    public int getEmp_id(){
-        return emp_id;
+
+    public void setSec_code(int sec_code) {
+        this.sec_code = sec_code;
     }
 
     public String getName() {
@@ -53,14 +53,6 @@ public class EmployeeModel {
         this.name = name;
     }
 
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -69,12 +61,12 @@ public class EmployeeModel {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUname() {
+        return uname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     public String getPassword() {
