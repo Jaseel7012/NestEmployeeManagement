@@ -21,8 +21,8 @@ public interface LeaveDao extends CrudRepository<LeavesApply,Integer> {
         "WHERE l.leavestatus=0",nativeQuery = true)
     List<Map<String,String>> remainingleaves();
 
-//@Query(value = "SELECT * FROM `leavesmodel` WHERE `emp_id`=:emp_id AND :date BETWEEN `frmdate` AND `todate` AND `leavestatus`=1",nativeQuery = true)
-//List<LeavesApply> emplcheckleave(@Param("emp_id") Integer emp_id,String date);
+//@Query(value = "SELECT * FROM `leavesmodel` WHERE `emp_id`=:emp_id  BETWEEN `frmdate`=:frmdate AND `todate` AND `leavestatus`=1",nativeQuery = true)
+//List<LeavesApply> emplcheckleave(@Param("emp_id") Integer emp_id,@Param("frmdate") String date);
 
 @Modifying
 @Transactional
